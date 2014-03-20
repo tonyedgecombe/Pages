@@ -14,8 +14,11 @@ namespace Links
                 return;
             }
 
-            var finder = new LinkFinder(new Uri(args[0], UriKind.Absolute));
-            finder.FindLinks();
+            var finder = new PageFinder(new Uri(args[0], UriKind.Absolute));
+            foreach(var page in finder.FindPages())
+            {
+                Console.WriteLine(page);
+            }
         }
     }
 }

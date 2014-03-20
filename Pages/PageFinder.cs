@@ -6,7 +6,7 @@ using HtmlAgilityPack;
 
 namespace Links
 {
-    internal class LinkFinder
+    internal class PageFinder
     {
         private readonly Uri _baseUri;
         private readonly string[] _ignored = {".png", ".jpg", ".exe"};
@@ -15,20 +15,20 @@ namespace Links
 
         private readonly HttpClient _client = new HttpClient();
 
-        public LinkFinder(Uri baseUri)
+        public PageFinder(Uri baseUri)
         {
             _baseUri = baseUri;
         }
 
-        public IEnumerable<string> FindLinks()
+        public IEnumerable<string> FindPages()
         {
             _uris = new HashSet<string>();
-            FindLinks(_baseUri);
+            FindPages(_baseUri);
 
             return _uris;
         }
 
-        private void FindLinks(Uri uri)
+        private void FindPages(Uri uri)
         {
             if (_uris.Contains(uri.AbsoluteUri))
             {
@@ -64,12 +64,11 @@ namespace Links
             }
 
             _uris.Add(uri.ToString());
-            Console.WriteLine(uri);
 
-            FindLinks(result.Content);
+            FindPages(result.Content);
         }
 
-        private void FindLinks(HttpContent content)
+        private void FindPages(HttpContent content)
         {
             var contentType = content.Headers.ContentType;
             if (contentType.MediaType != "text/html")
@@ -88,7 +87,7 @@ namespace Links
 
             foreach (var uri in uris)
             {
-                FindLinks(uri.IsAbsoluteUri ? uri : new Uri(_baseUri, uri));
+                FindPages(uri.IsAbsoluteUri ? uri : new Uri(_baseUri, uri));
             }
         }
     }
