@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Links
 {
@@ -15,7 +16,7 @@ namespace Links
             }
 
             var finder = new PageFinder(new Uri(args[0], UriKind.Absolute));
-            foreach(var page in finder.FindPages())
+            foreach(var page in finder.FindPages().OrderBy(uri => uri))
             {
                 Console.WriteLine(page);
             }
