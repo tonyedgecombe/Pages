@@ -11,7 +11,7 @@ namespace Links
             {
                 Console.WriteLine("Syntax:");
                 Console.WriteLine("");
-                Console.WriteLine("Links http://www.domain.com");
+                Console.WriteLine("Pages http://www.domain.com");
                 return;
             }
 
